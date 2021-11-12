@@ -2,5 +2,7 @@ discord.py
 requests
 python-dotenv
 discord
-table2ascii
+dataframe_image
+pandas
+numpy
 

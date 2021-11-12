@@ -2,6 +2,7 @@ import os
 import discord
 import logging
 from dotenv import load_dotenv
+import dataframe_image as dfi
 
 from convert_data import convert_to_geocord
 from get_data import get_5day_weather, get_48h_weather, get_7day_weather, get_current_weather
@@ -80,8 +81,9 @@ async def on_message(message):
             logging.info(f"Requesting data for {location}")
             specification = content[-1]
             output = request_data(location, specification)
+            dfi.export(output, "img.png")
             location = " ".join(location)
-            await message.channel.send(f"Weather for location {location} is:\n```\n{output}\n```")
+            await message.channel.send(f"Weather for location {location} is:\n", file = discord.File("img.png"))
             return
 
 client.run(DISCORD_TOKEN)

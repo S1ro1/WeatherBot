@@ -1,8 +1,8 @@
 import requests
-
-url = "https://api.opencagedata.com/geocode/v1/json?q="
+from table2ascii import table2ascii
 
 def convert_to_geocord(location, key):
+    url = "https://api.opencagedata.com/geocode/v1/json?q="
     request_url = f"{url}{location}&key={key}"
     data = requests.get(request_url).json()
     lat = data["results"][0]["annotations"]["DMS"]["lat"].split("'")[0].replace(" ", "")
@@ -10,7 +10,6 @@ def convert_to_geocord(location, key):
     lat = dms2dec(lat)
     lng = dms2dec(lng)
     return [lat, lng]
-
 
 def dms2dec(dms):
     if len(dms) > 5:

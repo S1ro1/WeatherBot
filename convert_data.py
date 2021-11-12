@@ -1,5 +1,4 @@
 import requests
-from table2ascii import table2ascii
 
 def convert_to_geocord(location, key):
     url = "https://api.opencagedata.com/geocode/v1/json?q="

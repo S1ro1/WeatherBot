@@ -71,18 +71,17 @@ async def on_message(message):
     if message.content.startswith("?weather"):
         content = message.content.split()
         logging.info("Accepting commands")
-        if len(content) != 3:
+        if len(content) < 3:
             logging.error(error_msg[1])
             await message.channel.send(error_msg[1])
             return
         else:
-            location = content[1]
+            location = content[1:-1]
             logging.info(f"Requesting data for {location}")
-            specification = content[2]
-            title = f"Weather for location {location} for {specification} is : \n"
+            specification = content[-1]
             output = request_data(location, specification)
-            embed = discord.Embed(title = title, description = output)
-            await message.channel.send(embed = embed)
+            location = " ".join(location)
+            await message.channel.send(f"Weather for location {location} is:\n```\n{output}\n```")
             return
 
 client.run(DISCORD_TOKEN)

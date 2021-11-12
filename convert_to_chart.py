@@ -1,13 +1,10 @@
+from table2ascii import table2ascii as t2a, PresetStyle
+
 def convert(dataset, index):
-    header_set = [["day", "time", "temp", "description"], ["time", "temp", "wind", "description"],
-              ["time", "temp", "descr"], ["date", "morn", "day", "eve", "night", "description"]]
+    dataset = [[str(x) for x in data] for data in dataset]
+    print(dataset)
+    header_set = [["time", "temp", "description"], ["time", "temp", "windspeed", "description"],
+                  ["time", "temp", "descr"], ["date", "morning", "day", "evening", "night", "description"]]
+    output = t2a(header = header_set[index], body = dataset, first_col_heading = True)
 
-    header = []
-
-    header.append("    ".join([str(item).center(6, " ") for item in header_set[index]]))
-
-    for data in dataset:
-        header.append("    ".join([str(item).center(1, " ") for item in data]))
-
-    table = '```'+'\n'.join(header) + '```'
-    return table
+    return output

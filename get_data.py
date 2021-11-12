@@ -10,12 +10,11 @@ def get_5day_weather(coordinates, key):
     data = requests.get(request_url).json()["list"]
 
     for index, value in enumerate(data):
-        day = datetime.fromtimestamp(data[index]["dt"]).date().strftime('%A')
-        time = datetime.fromtimestamp(data[index]["dt"]).time()
+        day = datetime.fromtimestamp(data[index]["dt"]).strftime("%d/%m:%H:%M")
         temp = round(data[index]["main"]["temp"], 1)
         description = data[index]["weather"][0]["description"]
 
-        data[index] = [day, time, temp, description]
+        data[index] = [day, temp, description]
 
     return convert(data, 0)
 
@@ -25,7 +24,7 @@ def get_current_weather(coordinates, key):
     data = requests.get(request_url).json()["current"]
 
     temp = round(data["temp"], 1)
-    time = datetime.fromtimestamp(data["dt"]).time()
+    time = datetime.fromtimestamp(data["dt"]).strftime("%H:%M:%S")
     wind = data["wind_speed"]
     description = data["weather"][0]["description"]
 
@@ -39,7 +38,7 @@ def get_48h_weather(coordinates, key):
     data = requests.get(request_url).json()["hourly"]
 
     for index, value in enumerate(data):
-        time = datetime.fromtimestamp(value["dt"]).time()
+        time = datetime.fromtimestamp(value["dt"]).strftime("%H:%M")
         temp = round(value["temp"],1 )
         description = value["weather"][0]["description"]
 
@@ -53,7 +52,7 @@ def get_7day_weather(coordinates, key):
     data = requests.get(request_url).json()["daily"]
 
     for index, value in enumerate(data):
-        time = datetime.fromtimestamp(value["dt"]).date()
+        time = datetime.fromtimestamp(value["dt"]).strftime("%m/%d")
         temp = value["temp"]
         description = value["weather"][0]["description"]
 

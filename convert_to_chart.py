@@ -1,5 +1,3 @@
-import datetime
-
 def convert(dataset, index):
     header_set = [["day", "time", "temp", "description"], ["time", "temp", "wind", "description"],
               ["time", "temp", "descr"], ["date", "morn", "day", "eve", "night", "description"]]

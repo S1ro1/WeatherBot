@@ -24,9 +24,12 @@ def get_current_weather(coordinates, key):
     request_url = f"{url}{coordinates[0]}&lon={coordinates[1]}&units=metric&exclude={exclude}&appid={key}"
     data = requests.get(request_url).json()["current"]
 
+    temp = round(data["temp"], 1)
     time = datetime.fromtimestamp(data["dt"]).time()
+    wind = data["wind_speed"]
+    description = data["weather"][0]["description"]
 
-    data = [[time, data["temp"], data["wind_speed"], data["weather"][0]["description"]]]
+    data = [[time, temp, wind, description]]
 
     return convert(data, 1)
 
@@ -37,8 +40,9 @@ def get_48h_weather(coordinates, key):
 
     for index, value in enumerate(data):
         time = datetime.fromtimestamp(value["dt"]).time()
-        temp = value["temp"]
+        temp = round(value["temp"],1 )
         description = value["weather"][0]["description"]
+
         data[index] = [time, temp, description]
 
     return convert(data, 2)
@@ -53,6 +57,6 @@ def get_7day_weather(coordinates, key):
         temp = value["temp"]
         description = value["weather"][0]["description"]
 
-        data[index] = [time, temp["morn"], temp["day"], temp["eve"], temp["night"], description]
+        data[index] = [time, round(temp["morn"], 1), round(temp["day"], 1), round(temp["eve"], 1), round(temp["night"], 1), description]
 
     return convert(data, 3)

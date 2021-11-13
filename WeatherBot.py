@@ -2,9 +2,6 @@ import os
 import discord
 import logging
 from dotenv import load_dotenv
-import dataframe_image as dfi
-from io import BytesIO
-from PIL import Image
 
 from convert_data import convert_to_geocord
 from get_data import get_5day_weather, get_48h_weather, get_7day_weather, get_current_weather
@@ -31,6 +28,7 @@ if log:
     logging.basicConfig(filename = "debug.log", filemode = "w", format = "%(levelname)s - %(message)s")
 else:
     logging.basicConfig(filename="debug.log", filemode="w", format="%(levelname)s - %(message)s", level = logging.CRITICAL) ##no critical messages will be shown
+
 
 def request_data(location, specification):
     location = convert_to_geocord(location, GEOCODING_API)
@@ -83,11 +81,9 @@ async def on_message(message):
             logging.info(f"Requesting data for {location}")
             specification = content[-1]
             output = request_data(location, specification)
-
-            dfi.export(output, "img.jpg")
-
-            location = " ".join(location)
-            await message.channel.send(f"Weather for location {location} is:\n", file = discord.File("img.jpg"))
+            location = "".join(location)
+            embed = discord.Embed(title = f"Weather for location {location}:", description = f"```\n{output}\n```")
+            await message.channel.send(embed = embed)
             return
 
 client.run(DISCORD_TOKEN)

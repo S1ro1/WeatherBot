@@ -3,6 +3,3 @@ requests
 python-dotenv
 discord
 dataframe_image
-pandas
-numpy
-

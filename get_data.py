@@ -52,7 +52,7 @@ def get_7day_weather(coordinates, key):
     data = requests.get(request_url).json()["daily"]
 
     for index, value in enumerate(data):
-        time = datetime.fromtimestamp(value["dt"]).strftime("%m/%d")
+        time = datetime.fromtimestamp(value["dt"]).strftime("%D")
         temp = value["temp"]
         description = value["weather"][0]["description"]
 
